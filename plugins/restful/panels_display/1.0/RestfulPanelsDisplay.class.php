@@ -41,8 +41,14 @@ class RestfulPanelsDisplay extends \RestfulBase implements \RestfulDataProviderI
    * @inheritDoc
    */
   public function view($id) {
-    $panel = panels_load_display($id);
-    return (array) $panel;
+    ctools_include('plugins', 'panels');
+    $display = panels_load_display($id);
+
+    /** @var RestfulPanelsStructuredRenderer $renderer */
+    $renderer = panels_get_renderer_handler('structured', $display);
+
+    $rendered = $renderer->render($display);
+    return (array) $rendered;
   }
 
 
