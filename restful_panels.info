@@ -1,0 +1,8 @@
+name = RESTful Panels
+description = Expose Panels Displays via RESTful interfaces.
+core = 7.x
+
+dependencies[] = restful
+
+; Plugins
+files[] = plugins/restful/panels_display/1.0/RestfulPanelsDisplay.class.php
