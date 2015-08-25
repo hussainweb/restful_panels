@@ -46,12 +46,23 @@ class RestfulPanelsDataProviderDisplay extends \RestfulBase implements \RestfulD
   public function view($id) {
     ctools_include('plugins', 'panels');
     $display = panels_load_display($id);
+    $display->context = $this->getContexts();
 
     /** @var RestfulPanelsStructuredRenderer $renderer */
     $renderer = panels_get_renderer_handler('structured', $display);
 
     $rendered = $renderer->render($display);
     return (array) $rendered;
+  }
+
+  /**
+   * Retrieve contexts to be passed to the Panels system.
+   */
+  public function getContexts() {
+    ctools_include('context');
+    $object = new stdClass();
+    $object->base_contexts = array('restful_panels' => ctools_context_create_empty('string'));
+    return ctools_context_load_contexts($object);
   }
 
 }
