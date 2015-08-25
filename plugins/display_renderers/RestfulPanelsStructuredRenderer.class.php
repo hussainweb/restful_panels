@@ -99,30 +99,4 @@ class RestfulPanelsStructuredRenderer extends panels_renderer_standard {
     return $output;
   }
 
-  /**
-   * @inheritDoc
-   */
-  function render_pane_content(&$pane) {
-    ctools_include('context');
-
-    // Don't worry about caching for now. TODO for later.
-    $content = restful_panels_ctools_content_render($pane->type, $pane->subtype, $pane->configuration, array(), $this->display->args, $this->display->context);
-
-    // If there's content, check if we've css configuration to add.
-    if (!empty($content)) {
-      // Pass long the css_id that is usually available.
-      if (!empty($pane->css['css_id'])) {
-        $content->css_id = check_plain($pane->css['css_id']);
-      }
-
-      // Pass long the css_class that is usually available.
-      if (!empty($pane->css['css_class'])) {
-        $content->css_class = check_plain($pane->css['css_class']);
-      }
-    }
-
-    return $content;
-  }
-
-
 }
