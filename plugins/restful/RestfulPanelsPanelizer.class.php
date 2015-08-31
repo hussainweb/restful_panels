@@ -53,7 +53,7 @@ class RestfulPanelsPanelizer extends RestfulPanelsDataProviderDisplay {
   }
 
   /**
-   * @inheritDoc
+   * {@inheritdoc}
    */
   public function index() {
     // Don't worry about this for now.
@@ -61,19 +61,23 @@ class RestfulPanelsPanelizer extends RestfulPanelsDataProviderDisplay {
   }
 
   /**
-   * @inheritDoc
+   * {@inheritdoc}
    */
   public function view($id) {
     $entities = entity_load($this->entityType, array($id));
     if (empty($entities[$id])) {
-      // TODO: Throw the proper exception.
-      throw new Exception();
+      throw new RestfulNotFoundException(format_string('Entity of type @type with id @id could not be found.', array(
+        '@type' => $this->entityType,
+        '@id' => $id,
+      )));
     }
 
     $entity = $entities[$id];
     if (empty($entity->panelizer[$this->viewMode])) {
-      // TODO: Throw the proper exception.
-      throw new Exception();
+      throw new RestfulUnprocessableEntityException(format_string('The specified display for entity of type @type with id @id could not be loaded.', array(
+        '@type' => $this->entityType,
+        '@id' => $id,
+      )));
     }
     return parent::view($entity->panelizer[$this->viewMode]->did);
   }
