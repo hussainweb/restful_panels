@@ -4,15 +4,16 @@
  * Generic data provider for panel displays.
  */
 
-/**
- * Class RestfulPanelsDataProviderDisplay.
- */
-class RestfulPanelsDataProviderDisplay extends \RestfulBase implements \RestfulDataProviderInterface {
+namespace Drupal\restful_panels\Plugin\resource;
+
+use Drupal\restful\Plugin\resource\Resource;
+
+class RestfulPanelsDataProviderDisplay extends Resource {
 
   /**
    * @inheritDoc
    */
-  public function publicFieldsInfo() {
+  protected function publicFields() {
     $fields = array();
     $fields['did'] = array();
     $fields['layout'] = array();
@@ -24,7 +25,7 @@ class RestfulPanelsDataProviderDisplay extends \RestfulBase implements \RestfulD
   /**
    * @inheritDoc
    */
-  public function index() {
+  public function index($path) {
     $result = db_select('panels_display', 'd')
       ->fields('d')
       ->execute();
@@ -43,9 +44,9 @@ class RestfulPanelsDataProviderDisplay extends \RestfulBase implements \RestfulD
   /**
    * @inheritDoc
    */
-  public function view($id) {
+  public function view($identifier) {
     ctools_include('plugins', 'panels');
-    $display = panels_load_display($id);
+    $display = panels_load_display($identifier);
     $display->context = $this->getContexts();
 
     /** @var RestfulPanelsStructuredRenderer $renderer */
@@ -60,7 +61,7 @@ class RestfulPanelsDataProviderDisplay extends \RestfulBase implements \RestfulD
    */
   public function getContexts() {
     ctools_include('context');
-    $object = new stdClass();
+    $object = new \StdClass();
     $object->base_contexts = array('restful_panels' => ctools_context_create_empty('string'));
     return ctools_context_load_contexts($object);
   }

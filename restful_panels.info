@@ -3,10 +3,8 @@ description = Expose Panels Displays via RESTful interfaces.
 core = 7.x
 
 dependencies[] = ctools
-dependencies[] = restful
+dependencies[] = restful (2.x)
 dependencies[] = panels
 
-; Plugins
-files[] = plugins/restful/RestfulPanelsDataProviderDisplay.class.php
-files[] = plugins/restful/RestfulPanelsPanelizer.class.php
-files[] = plugins/restful/panels_display/1.0/RestfulPanelsDisplay.class.php
+registry_autoload[] = PSR-0
+registry_autoload[] = PSR-4

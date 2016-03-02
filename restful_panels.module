@@ -8,7 +8,7 @@
  * Implements hook_ctools_plugin_directory().
  */
 function restful_panels_ctools_plugin_directory($owner, $plugin_type) {
-  if ($owner == 'restful' || $owner == 'panels') {
+  if ($owner == 'panels') {
     return 'plugins/' . $plugin_type;
   }
 
